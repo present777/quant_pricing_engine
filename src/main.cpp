@@ -5,6 +5,7 @@
 #include "../include/BlackScholes.hpp"
 #include "../include/MonteCarlo.hpp"
 #include "../include/BinomialTree.hpp"
+#include "../include/Greeks.hpp"
 
 int main(){
     double S=100.0;
@@ -23,11 +24,19 @@ int main(){
     double mc_price=MonteCarloPrice(option,S,r,sigma,num_paths);
     double bt_price=BinomialTreePrice(option,S,r,sigma,steps);
 
+    double delta=calDelta(S,K,r,T,sigma);
+    double gamma=calGamma(S,K,r,T,sigma);
+    double vega=calVega(S,K,r,T,sigma);
+
     std::cout<<"Black-Scholes Call Price: "<< bs_price <<std::endl;
     std::cout << "========================================" << std::endl;
     std::cout<<"Monte Carlo Call Price: "<< mc_price <<std::endl;
     std::cout << "========================================" << std::endl;
     std::cout<<"Binomial Tree Call Price: "<< bt_price <<std::endl;
+    std::cout << "========================================" << std::endl;
+    std::cout<<"Delta: "<< delta <<std::endl;
+    std::cout<<"Gamma: "<< gamma <<std::endl;
+    std::cout<<"Vega: "<< vega <<std::endl;
 
     return 0;
 }
