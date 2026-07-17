@@ -3,9 +3,13 @@
 #include "VanillaOption.hpp"
 #include <random>
 #include <cmath>
+#include "Market.hpp"
 
-inline double MonteCarloPrice(const VanillaOption& option,double S,double r,double sigma,int num_paths){
+inline double MonteCarloPrice(const VanillaOption& option,const Market& market,int num_paths){
     double T=option.getExpiry();
+    double S=market.getSpot();
+    double r=market.getRate();
+    double sigma=market.getVol();
 
     double payoffs_sum=0.0;
 

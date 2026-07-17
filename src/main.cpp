@@ -6,6 +6,7 @@
 #include "../include/MonteCarlo.hpp"
 #include "../include/BinomialTree.hpp"
 #include "../include/Greeks.hpp"
+#include "../include/Market.hpp"
 
 int main(){
     double S=100.0;
@@ -13,6 +14,8 @@ int main(){
     double r=0.05;
     double sigma=0.2;
     double T=1.0;
+
+    Market market(S,r,sigma);
 
     PayoffCall call_payoff(K);
     VanillaOption call_option(T,call_payoff);
@@ -23,21 +26,21 @@ int main(){
     int num_paths=1000000;
     int steps=1000;
 
-    double bs_call=blackscholesPrice(call_option,S,r,sigma);
-    double mc_call=MonteCarloPrice(call_option,S,r,sigma,num_paths);
-    double bt_call=BinomialTreePrice(call_option,S,r,sigma,steps);
+    double bs_call=blackscholesPrice(call_option,market);
+    double mc_call=MonteCarloPrice(call_option,market,num_paths);
+    double bt_call=BinomialTreePrice(call_option,market,steps);
 
-    double bs_put=blackscholesPrice(put_option,S,r,sigma);
-    double mc_put=MonteCarloPrice(put_option,S,r,sigma,num_paths);
-    double bt_put=BinomialTreePrice(put_option,S,r,sigma,steps);
+    double bs_put=blackscholesPrice(put_option,market);
+    double mc_put=MonteCarloPrice(put_option,market,num_paths);
+    double bt_put=BinomialTreePrice(put_option,market,steps);
 
-    double delta_call=calDelta(call_option,S,r,sigma);
-    double gamma_call=calGamma(call_option,S,r,sigma);
-    double vega_call=calVega(call_option,S,r,sigma);
+    double delta_call=calDelta(call_option,market);
+    double gamma_call=calGamma(call_option,market);
+    double vega_call=calVega(call_option,market);
 
-    double delta_put=calDelta(put_option,S,r,sigma);
-    double gamma_put=calGamma(put_option,S,r,sigma);
-    double vega_put=calVega(put_option,S,r,sigma);
+    double delta_put=calDelta(put_option,market);
+    double gamma_put=calGamma(put_option,market);
+    double vega_put=calVega(put_option,market);
 
     std::cout<<"Black-Scholes Call Price: "<< bs_call <<std::endl;
     std::cout << "========================================" << std::endl;

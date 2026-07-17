@@ -3,10 +3,14 @@
 #include "VanillaOption.hpp"
 #include <vector>
 #include <cmath>
+#include "Market.hpp"
 
-inline double BinomialTreePrice(const VanillaOption& option,double S,double r,double sigma,int steps){
+inline double BinomialTreePrice(const VanillaOption& option,const Market& market,int steps){
     double T=option.getExpiry();
     double dt=T/steps;
+    double S=market.getSpot();
+    double r=market.getRate();
+    double sigma=market.getVol();
 
     double u=std::exp(sigma*std::sqrt(dt));
     double d=1.0/u;

@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include "VanillaOption.hpp"
+#include "Market.hpp"
 
 inline double normCDF(double x){
     return 0.5*std::erfc(-x/std::sqrt(2));
@@ -15,9 +16,12 @@ inline double blackscholesCallPrice(double S,double K,double r,double T,double s
     return S*normCDF(d1)-K*std::exp(-r*T)*normCDF(d2);
 }
 
-inline double blackscholesPrice(const VanillaOption& option,double S,double r,double sigma){
+inline double blackscholesPrice(const VanillaOption& option,const Market& market){
     double K=option.getPayoff().getStrike();
     double T=option.getExpiry();
+    double S=market.getSpot();
+    double r=market.getRate();
+    double sigma=market.getVol();
     OptionType type=option.getPayoff().getType();
 
     double call_price=blackscholesCallPrice(S,K,r,T,sigma);
