@@ -15,4 +15,8 @@ public:
     double optionPayoff(double spot) const{
         return payoff(spot);
     }
+
+    const Payoff& getPayoff() const{
+        return payoff;
+    }
 };

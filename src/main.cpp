@@ -14,29 +14,50 @@ int main(){
     double sigma=0.2;
     double T=1.0;
 
-    PayoffCall payoff(K);
-    VanillaOption option(T,payoff);
+    PayoffCall call_payoff(K);
+    VanillaOption call_option(T,call_payoff);
+
+    PayoffPut put_payoff(K);
+    VanillaOption put_option(T,put_payoff);
 
     int num_paths=1000000;
     int steps=1000;
 
-    double bs_price=blackscholesCallPrice(S,K,r,T,sigma);
-    double mc_price=MonteCarloPrice(option,S,r,sigma,num_paths);
-    double bt_price=BinomialTreePrice(option,S,r,sigma,steps);
+    double bs_call=blackscholesPrice(call_option,S,r,sigma);
+    double mc_call=MonteCarloPrice(call_option,S,r,sigma,num_paths);
+    double bt_call=BinomialTreePrice(call_option,S,r,sigma,steps);
 
-    double delta=calDelta(S,K,r,T,sigma);
-    double gamma=calGamma(S,K,r,T,sigma);
-    double vega=calVega(S,K,r,T,sigma);
+    double bs_put=blackscholesPrice(put_option,S,r,sigma);
+    double mc_put=MonteCarloPrice(put_option,S,r,sigma,num_paths);
+    double bt_put=BinomialTreePrice(put_option,S,r,sigma,steps);
 
-    std::cout<<"Black-Scholes Call Price: "<< bs_price <<std::endl;
+    double delta_call=calDelta(call_option,S,r,sigma);
+    double gamma_call=calGamma(call_option,S,r,sigma);
+    double vega_call=calVega(call_option,S,r,sigma);
+
+    double delta_put=calDelta(put_option,S,r,sigma);
+    double gamma_put=calGamma(put_option,S,r,sigma);
+    double vega_put=calVega(put_option,S,r,sigma);
+
+    std::cout<<"Black-Scholes Call Price: "<< bs_call <<std::endl;
     std::cout << "========================================" << std::endl;
-    std::cout<<"Monte Carlo Call Price: "<< mc_price <<std::endl;
+    std::cout<<"Monte Carlo Call Price: "<< mc_call <<std::endl;
     std::cout << "========================================" << std::endl;
-    std::cout<<"Binomial Tree Call Price: "<< bt_price <<std::endl;
+    std::cout<<"Binomial Tree Call Price: "<< bt_call <<std::endl;
     std::cout << "========================================" << std::endl;
-    std::cout<<"Delta: "<< delta <<std::endl;
-    std::cout<<"Gamma: "<< gamma <<std::endl;
-    std::cout<<"Vega: "<< vega <<std::endl;
+    std::cout<<"Call Delta: "<< delta_call <<std::endl;
+    std::cout<<"Call Gamma: "<< gamma_call <<std::endl;
+    std::cout<<"Call Vega: "<< vega_call <<std::endl;
+    std::cout << "========================================" << std::endl;
+    std::cout<<"Black-Scholes Put Price: "<< bs_put <<std::endl;
+    std::cout << "========================================" << std::endl;
+    std::cout<<"Monte Carlo Put Price: "<< mc_put <<std::endl;
+    std::cout << "========================================" << std::endl;
+    std::cout<<"Binomial Tree Put Price: "<< bt_put <<std::endl;
+    std::cout << "========================================" << std::endl;
+    std::cout<<"Put Delta: "<< delta_put <<std::endl;
+    std::cout<<"Put Gamma: "<< gamma_put <<std::endl;
+    std::cout<<"Put Vega: "<< vega_put <<std::endl;
 
     return 0;
 }
