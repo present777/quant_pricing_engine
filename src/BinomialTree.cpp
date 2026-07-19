@@ -2,13 +2,20 @@
 
 #include <vector> 
 #include <cmath>
+#include <stdexcept>
 
 double BinomialTreePrice(const VanillaOption& option, const Market& market, int steps) {
     double T = option.getExpiry();
-    double dt = T / steps;
     double S = market.getSpot();
     double r = market.getRate();
     double sigma = market.getVol();
+
+    if (T <= 0.0) throw std::invalid_argument("Time to maturity (T) must be positive");
+    if (sigma <= 0.0) throw std::invalid_argument("Volatility (sigma) must be positive");
+    if (S <= 0.0) throw std::invalid_argument("Spot must be positive");
+    if (steps <= 0) throw std::invalid_argument("Number of steps must be positive");
+
+    double dt = T / steps;
     
     double u = std::exp(sigma * std::sqrt(dt));
     double d = 1.0 / u;
