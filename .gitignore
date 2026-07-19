@@ -1,6 +1,18 @@
 *.exe
-*.o
 *.out
 *.app
+pricing_engine
+
+*.o
+*.obj
+
+build/
+bin/
 
 .vscode/
+.idea/
+*.suo
+*.user
+
+.DS_Store
+Thumbs.db

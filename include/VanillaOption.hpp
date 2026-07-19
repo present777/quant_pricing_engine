@@ -2,21 +2,16 @@
 
 #include "Payoff.hpp"
 
-class VanillaOption{
+class VanillaOption {
 private:
     double expiry;
-
     const Payoff& payoff;
 public:
-    VanillaOption(double expiry_,const Payoff& payoff_):expiry(expiry_),payoff(payoff_){}
-
-    double getExpiry() const{ return expiry; }
-
-    double optionPayoff(double spot) const{
-        return payoff(spot);
-    }
-
-    const Payoff& getPayoff() const{
-        return payoff;
-    }
+    VanillaOption(double expiry_, const Payoff& payoff_);
+    
+    double getExpiry() const;
+    
+    double optionPayoff(double spot) const;
+    
+    const Payoff& getPayoff() const;
 };
